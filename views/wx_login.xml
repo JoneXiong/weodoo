@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="wx_bind" name="微信绑定">
+        <t t-call="web.login_layout">
+            <div class="oe_login_form" role="form">
+                <h4 style="text-align: center;"><t t-esc="name + ' 没有绑定本系统的帐户'" /></h4>
+                <div style="text-align: center;">
+                    <div class="pw-box-hd" id="barcode_box">
+                        <t t-if="avatar">
+                        <img t-attf-src="{{ avatar }}" style="width: 150px;"/>
+                        </t>
+                    </div><br/><br/>
+                    <a type="button" class="btn btn-primary" t-attf-href="/web/login?qr_id={{ qr_id }}">已有邮箱帐号？登录</a><br/><br/>
+                    <!--<a type="button" class="btn btn-default" t-attf-href="/web/signup?qr_id={{ qr_id }}">注册新帐号</a>-->
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>
