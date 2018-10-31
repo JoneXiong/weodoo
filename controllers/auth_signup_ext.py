@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import logging
+import werkzeug.utils
 
 import odoo
 from odoo import http
@@ -14,7 +15,17 @@ _logger = logging.getLogger(__name__)
 class AuthSignupHome(auth_signup.controllers.main.AuthSignupHome):
     @http.route()
     def web_login(self, *args, **kw):
+        if request.httprequest.method == 'GET':
+            if request.session.uid and request.params.get('redirect'):
+                return http.redirect_with_hash(request.params.get('redirect'))
+            fm = request.params.get('_fm', None)
+            if not request.session.uid and fm:
+                providers = self.list_providers()
+                if providers:
+                    return werkzeug.utils.redirect(providers[0]['auth_link'], 303)
+
         response = super(AuthSignupHome, self).web_login(*args, **kw)
+
         from .controllers import QR_DICT
         qr_id = request.session.get('qr_id',None)#kw.get('qr_id', False)
         if qr_id and request.params['login_success']:
