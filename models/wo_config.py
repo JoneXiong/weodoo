@@ -9,6 +9,7 @@ class WeOdooConfig(models.Model):
     _description = u'WeOdoo设置'
 
     oauth_client_key = fields.Char('授权应用Key')
+    oauth_client_secret = fields.Char('授权应用Secret')
     enable_wx_notify = fields.Boolean('启用企业微信通知', default=True)
 
 
@@ -18,5 +19,6 @@ class WeOdooConfig(models.Model):
             vals["oauth_client_key"] = vals["oauth_client_key"].lstrip().rstrip()
         result = super(WeOdooConfig, self).write(vals)
         third_provider = self.env.ref('weodoo.provider_third')
-        third_provider.write({"client_id": vals["oauth_client_key"]})
+        if "oauth_client_key" in vals:
+            third_provider.write({"client_id": vals["oauth_client_key"]})
         return result

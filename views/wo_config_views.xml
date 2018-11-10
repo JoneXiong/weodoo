@@ -13,7 +13,7 @@
 
                      <group string="基础配置" colspan="4">
                         <field name="oauth_client_key"/>
-                        <field name="enable_wx_notify"/>
+                        <field name="oauth_client_secret"/>
                     </group>
 
                     </sheet>
