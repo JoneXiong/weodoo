@@ -31,7 +31,7 @@ def gen_id(data):
 class SocialLogin(http.Controller):
 
 
-    @http.route('/wx/bind', type='http', auth="public", website=True)
+    @http.route('/corp/bind', type='http', auth="public", website=True)
     def wx_bind(self, **kw):
         qr_id = kw.get('qr_id')
         _info = QR_DICT[qr_id]['data']

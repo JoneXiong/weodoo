@@ -57,7 +57,7 @@ class OAuthControllerExt(OAuthController):
                     from .controllers import gen_id
                     credentials[1]['oauth_provider_id'] = provider
                     qr_id = gen_id(credentials[1])
-                    url = '/wx/bind?qr_id=%s'%qr_id
+                    url = '/corp/bind?qr_id=%s'%qr_id
                 else:
                     return login_and_redirect(*credentials, redirect_url=url)
             except AttributeError:
