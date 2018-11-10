@@ -12,6 +12,7 @@
     'data': [
         'views/wx_login.xml',
         'data/oauth_provider.xml',
+        'views/wo_config_views.xml',
     ],
     'qweb': [],
     'demo': [],

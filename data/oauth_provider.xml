@@ -10,5 +10,9 @@
             <field name="data_endpoint"></field>
             <field name="body">企业微信登录</field>
         </record>
+        <record id="weodoo_config_default" model="wo.config">
+            <field name="oauth_client_key"></field>
+            <field name="enable_wx_notify">1</field>
+        </record>
     </data>
 </odoo>

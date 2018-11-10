@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="wo_config_view_form_1003" model="ir.ui.view">
+            <field name="name">wo.config.view_form</field>
+            <field name="model">wo.config</field>
+            <field name="type">form</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <form string="WeOdoo设置" create="0" delete="0" duplicate="0">
+                    <sheet>
+
+                     <group string="基础配置" colspan="4">
+                        <field name="oauth_client_key"/>
+                        <field name="enable_wx_notify"/>
+                    </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="wo_config_action_404" model="ir.actions.act_window">
+            <field name="name">WeOdoo设置</field>
+            <field name="res_model">wo.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="res_id">1</field>
+            <field name="help" type="html"><p></p></field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('wo_config_view_form_1003')}),
+                    ]"/>
+        </record>
+        <menuitem action="wo_config_action_404" id="wo_config_menuitem_322_1536754696" name="WeOdoo设置" parent="base.menu_administration" sequence="2"/>
+
+    </data>
+</openerp>
