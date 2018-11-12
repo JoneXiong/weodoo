@@ -7,3 +7,18 @@ Odoo 快速接入企业微信，快捷使用，免对接开发配置，支持局
 * PC端扫码登录、企业微信端授权登录
 * 可绑定自有的甚至本地的Odoo服务地址，企业微信端自动授权登录绑定的Odoo用户
 * 可自由发送通知消息到企业微信
+
+
+## 使用
+
+- 下载Odoo模块wedooo并安装
+- 在登录页面点“企业微信登录”按提示安装好企业微信手机端应用
+- 将得到的授权应用Key和授权应用Secret填入Odoo的【设置】-【WeOdoo设置】页即可
+
+![info](http://oejia.net/files/201811/12123008687.jpeg)
+
+![info](http://oejia.net/files/201811/12123138548.jpeg)
+
+![info](http://oejia.net/files/201811/12123243069.jpeg.jpeg)
+
+
