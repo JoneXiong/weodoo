@@ -19,6 +19,6 @@ Odoo 快速接入企业微信，快捷使用，免对接开发配置，支持局
 
 ![info](http://oejia.net/files/201811/12123138548.jpeg)
 
-![info](http://oejia.net/files/201811/12123243069.jpeg.jpeg)
+![info](http://oejia.net/files/201811/12123243069.jpeg)
 
 
