@@ -12,6 +12,10 @@ class WeOdooConfig(models.Model):
     oauth_client_secret = fields.Char('授权应用Secret')
     enable_wx_notify = fields.Boolean('启用企业微信通知', default=True)
 
+    @api.multi
+    def name_get(self):
+        return [(obj.id, "WeOdoo 设置") for obj in self]
+
 
     @api.multi
     def write(self, vals):

@@ -55,3 +55,33 @@ class ResUsers(models.Model):
         # return user credentials       
         return (self.env.cr.dbname, login, access_token)
 
+
+    def is_available(self):
+        return self.oauth_uid or super(ResUsers, self).is_available()
+
+    def send_corp_text(self, text):
+        msg = {
+            "mtype": "text",
+            "content": text,
+        }
+        self.partner_id.send_corp_msg(msg)
+
+    @api.multi
+    def send_corp_text_confirm(self):
+        self.ensure_one()
+
+        new_context = dict(self._context) or {}
+        new_context['default_model'] = 'res.users'
+        new_context['default_method'] = 'send_corp_text'
+        new_context['record_ids'] = self.id
+        return {
+            'name': u'发送企业微信消息',
+            'type': 'ir.actions.act_window',
+            'res_model': 'wx.confirm',
+            'res_id': None,
+            'view_mode': 'form',
+            'view_type': 'form',
+            'context': new_context,
+            'view_id': self.env.ref('weodoo.wo_confirm_view_form_send').id,
+            'target': 'new'
+        }
