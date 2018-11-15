@@ -28,15 +28,21 @@ class AuthSignupHome(auth_signup.controllers.main.AuthSignupHome):
 
         from .controllers import QR_DICT
         qr_id = request.session.get('qr_id',None)#kw.get('qr_id', False)
-        if qr_id and request.params['login_success']:
+        if qr_id and (request.params['login_success'] or request.session.uid):
             from .controllers import QR_DICT
             if qr_id in QR_DICT:
                 qr = QR_DICT[qr_id]
                 if 1:#qr['state']=='fail' and qr['openid']:
-                    user = request.env.user
+                    if request.session.uid:
+                        user = request.env["res.users"].sudo().search(([('id','=',request.session.uid)]))
+                    else:
+                        user = request.env.user
                     user.write({
                         'oauth_provider_id': qr['data']['oauth_provider_id'],
                         'oauth_uid': qr['data']['user_id'],
                     })
+                    request.env.cr.commit()
+                    if request.session.uid:
+                        return http.redirect_with_hash("/")
         return response
 

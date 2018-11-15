@@ -61,10 +61,12 @@ class OAuthControllerExt(OAuthController):
                 else:
                     return login_and_redirect(*credentials, redirect_url=url)
             except AttributeError:
+                import traceback;traceback.print_exc()
                 # auth_signup is not installed
                 _logger.error("auth_signup not installed on database %s: oauth sign up cancelled." % (dbname,))
                 url = "/web/login?oauth_error=1"
             except AccessDenied:
+                import traceback;traceback.print_exc()
                 # oauth credentials not valid, user could be on a temporary session
                 _logger.info('OAuth2: access denied, redirect to main page in case a valid session exists, without setting cookies')
                 url = "/web/login?oauth_error=3"
