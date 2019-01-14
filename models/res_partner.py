@@ -10,7 +10,7 @@ class res_partner(models.Model):
 
     def send_corp_msg(self, msg):
         from ..rpc import send_msg
-        send_msg(self.env, self.user_ids[0].oauth_uid, msg)
+        send_msg(self.env, [self.user_ids[0].oauth_uid], msg)
 
     def get_corp_key(self):
         return self.user_ids[0].oauth_uid
