@@ -13,13 +13,14 @@ _logger = logging.getLogger(__name__)
 
 
 class AuthSignupHome(auth_signup.controllers.main.AuthSignupHome):
+
     @http.route()
     def web_login(self, *args, **kw):
         if request.httprequest.method == 'GET':
             if request.session.uid and request.params.get('redirect'):
                 return http.redirect_with_hash(request.params.get('redirect'))
             fm = request.params.get('_fm', None)
-            if not request.session.uid and fm:
+            if not request.session.uid and fm!=None:
                 providers = self.list_providers()
                 if providers:
                     return werkzeug.utils.redirect(providers[0]['auth_link'], 303)
@@ -42,7 +43,15 @@ class AuthSignupHome(auth_signup.controllers.main.AuthSignupHome):
                         'oauth_uid': qr['data']['user_id'],
                     })
                     request.env.cr.commit()
-                    if request.session.uid:
-                        return http.redirect_with_hash("/")
+                    #if request.session.uid:
+                    #    return http.redirect_with_hash("/")
         return response
 
+    @http.route()
+    def web_client(self, s_action=None, **kw):
+        res = super(AuthSignupHome, self).web_client(s_action, **kw)
+        if not request.session.uid:
+            fm = request.params.get('_fm', None)
+            if fm!=None:
+                res = werkzeug.utils.redirect('/web/login?_fm=%s'%fm, 303)
+        return res
