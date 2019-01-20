@@ -11,7 +11,7 @@
                         <img t-attf-src="{{ avatar }}" style="width: 150px;"/>
                         </t>
                     </div><br/><br/>
-                    <a type="button" class="btn btn-primary" t-attf-href="/web/login?qr_id={{ qr_id }}">已有帐号？登录并绑定</a><br/><br/>
+                    <a type="button" class="btn btn-primary" t-attf-href="{{login_url}}">已有帐号？登录并绑定</a><br/><br/>
                     <!--<a type="button" class="btn btn-default" t-attf-href="/web/signup?qr_id={{ qr_id }}">注册新帐号</a>-->
                 </div>
             </div>

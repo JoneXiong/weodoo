@@ -3,6 +3,7 @@ import logging
 import time
 import random
 import json
+import base64
 
 from odoo import http
 from odoo.addons.web.controllers.main import Home, ensure_db
@@ -34,10 +35,15 @@ class SocialLogin(http.Controller):
     @http.route('/corp/bind', type='http', auth="public", website=True)
     def wx_bind(self, **kw):
         qr_id = kw.get('qr_id')
+        redirect = kw.get('redirect', '')
+        redirect = base64.urlsafe_b64decode(redirect.encode('utf-8'))
         _info = QR_DICT[qr_id]['data']
 
         values = request.params.copy()
-        values['qr_id'] = qr_id
+        if redirect:
+            values['login_url'] = '/web/login?qr_id=%s&redirect=%s'%(qr_id, redirect)
+        else:
+            values['login_url'] = '/web/login?qr_id=%s'%qr_id
         values['avatar'] = _info['avatar']
         values['name'] = _info['name']
         request.session['qr_id'] = qr_id
