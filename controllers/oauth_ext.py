@@ -2,7 +2,7 @@
 import werkzeug
 import json
 try:
-    import urlparse
+    from urlparse import urlparse
 except:
     from urllib.parse import urlparse
 try:
@@ -11,6 +11,7 @@ except:
     from urllib import request as urllib2
 
 import logging
+import base64
 
 from odoo import http
 from odoo.http import request
@@ -57,7 +58,8 @@ class OAuthControllerExt(OAuthController):
                     from .controllers import gen_id
                     credentials[1]['oauth_provider_id'] = provider
                     qr_id = gen_id(credentials[1])
-                    url = '/corp/bind?qr_id=%s'%qr_id
+                    redirect = base64.urlsafe_b64encode(redirect).decode('utf-8')
+                    url = '/corp/bind?qr_id=%s&redirect=%s'%(qr_id, redirect)
                 else:
                     return login_and_redirect(*credentials, redirect_url=url)
             except AttributeError:
@@ -100,3 +102,13 @@ class OAuthLoginExt(OAuthLogin):
             )
             provider['auth_link'] = "%s?%s" % (provider['auth_endpoint'], werkzeug.url_encode(params))
         return providers
+
+    def get_state(self, provider):
+        _logger.info('>>> get_state %s'%request.httprequest.url)
+        _fm = request.params.get('_fm', None)
+        state = super(OAuthLoginExt, self).get_state(provider)
+        if _fm:
+            fragment = base64.urlsafe_b64decode(_fm.encode('utf-8'))
+            r = werkzeug.url_unquote_plus(state.get('r', ''))
+            state['r'] = werkzeug.url_quote_plus('%s#%s'%(r, fragment))
+        return state
