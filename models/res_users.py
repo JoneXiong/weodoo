@@ -12,6 +12,7 @@ except:
 import logging
 
 from odoo import models, fields, api
+from odoo.exceptions import AccessDenied
 
 
 _logger = logging.getLogger(__name__)
