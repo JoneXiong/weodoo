@@ -20,10 +20,12 @@ QR_DICT = {}
 
 def gen_id(data):
     _now = time.time()
-    tm = str(int(_now*100))[-7:]
+    # 回收过期的ID
     for k,v in QR_DICT.items():
         if _now - v['ts'] > 600:
             del QR_DICT[k]
+    # 生成ID
+    tm = str(int(_now*100))[-7:]
     _id = str(random.randint(1,9)) + tm
     QR_DICT[_id] = {'ts':_now, 'state': 'gen', 'data': data}
     return _id
