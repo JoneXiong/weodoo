@@ -1,15 +1,6 @@
 # coding=utf-8
 import werkzeug
 import json
-try:
-    from urlparse import urlparse
-except:
-    from urllib.parse import urlparse
-try:
-    import urllib2
-except:
-    from urllib import request as urllib2
-
 import logging
 import base64
 
@@ -23,7 +14,6 @@ from odoo import registry as registry_get
 from odoo import api, http, SUPERUSER_ID, _
 
 from odoo.exceptions import AccessDenied
-from odoo.addons.auth_signup.models.res_users import SignupError
 
 _logger = logging.getLogger(__name__)
 
@@ -82,33 +72,3 @@ class OAuthControllerExt(OAuthController):
 
         return set_cookie_and_redirect(url)
 
-class OAuthLoginExt(OAuthLogin):
-
-    def list_providers(self):
-        third_provider_id = request.env.ref('weodoo.provider_third').id
-        try:
-            providers = request.env['auth.oauth.provider'].sudo().search_read([('id', '=', third_provider_id)])
-        except Exception:
-            providers = []
-        for provider in providers:
-            return_url = request.httprequest.url_root + 'auth_oauth/signin3rd'
-            state = self.get_state(provider)
-            params = dict(
-                response_type='token',
-                client_id=provider['client_id'],
-                redirect_uri=return_url,
-                scope=provider['scope'],
-                state=json.dumps(state),
-            )
-            provider['auth_link'] = "%s?%s" % (provider['auth_endpoint'], werkzeug.url_encode(params))
-        return providers
-
-    def get_state(self, provider):
-        _logger.info('>>> get_state %s'%request.httprequest.url)
-        _fm = request.params.get('_fm', None)
-        state = super(OAuthLoginExt, self).get_state(provider)
-        if _fm:
-            fragment = base64.urlsafe_b64decode(_fm.encode('utf-8'))
-            r = werkzeug.url_unquote_plus(state.get('r', ''))
-            state['r'] = werkzeug.url_quote_plus('%s#%s'%(r, fragment))
-        return state
