@@ -38,7 +38,7 @@ class SocialLogin(http.Controller):
     def wx_bind(self, **kw):
         qr_id = kw.get('qr_id')
         redirect = kw.get('redirect', '')
-        redirect = base64.urlsafe_b64decode(redirect.encode('utf-8'))
+        redirect = base64.urlsafe_b64decode(redirect.encode('utf-8')).decode('utf-8')
         _info = QR_DICT[qr_id]['data']
 
         values = request.params.copy()

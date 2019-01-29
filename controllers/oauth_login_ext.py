@@ -22,7 +22,7 @@ class AuthSignupHome(OAuthLogin):
         _logger.info('>>> get_state %s'%request.httprequest.url)
         _fm = request.params.get('_fm', None)
         if _fm:
-            fragment = base64.urlsafe_b64decode(_fm.encode('utf-8'))
+            fragment = base64.urlsafe_b64decode(_fm.encode('utf-8')).decode('utf-8')
             r = werkzeug.url_unquote_plus(state.get('r', ''))
             state['r'] = werkzeug.url_quote_plus('%s#%s'%(r, fragment))
         return state
@@ -60,7 +60,7 @@ class AuthSignupHome(OAuthLogin):
                 return http.redirect_with_hash(request.params.get('redirect'))
             fm = request.params.get('_fm', None)
             if not request.session.uid and fm!=None:
-                fragment = base64.urlsafe_b64decode(_fm.encode('utf-8'))
+                fragment = base64.urlsafe_b64decode(fm.encode('utf-8')).decode('utf-8')
                 if '_ftype=wo' in fragment:
                     auth_link = self._get_auth_link_wo()
                     return werkzeug.utils.redirect(auth_link, 303)
