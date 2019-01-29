@@ -14,5 +14,33 @@
             </field>
         </record>
 
+        <!-- Update Preferences form !-->
+        <record id="view_users_form_simple_modif_weodoo" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.wxent</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+            <data>
+                <field name="email" position="before">
+                    <field name="wecorp_notify"/>
+                </field>
+            </data>
+            </field>
+        </record>
+
+        <!-- Update user form !-->
+        <record id="view_users_form_weodoo" model="ir.ui.view">
+            <field name="name">res.users.form.mail</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="signature" position="before">
+                        <field name="wecorp_notify"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
     </data>
 </openerp>
