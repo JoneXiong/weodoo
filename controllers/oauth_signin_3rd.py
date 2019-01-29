@@ -48,7 +48,7 @@ class OAuthControllerExt(OAuthController):
                     from .controllers import gen_id
                     credentials[1]['oauth_provider_id'] = provider
                     qr_id = gen_id(credentials[1])
-                    redirect = base64.urlsafe_b64encode(redirect).decode('utf-8')
+                    redirect = base64.urlsafe_b64encode(redirect.encode('utf-8')).decode('utf-8')
                     url = '/corp/bind?qr_id=%s&redirect=%s'%(qr_id, redirect)
                 else:
                     return login_and_redirect(*credentials, redirect_url=url)
