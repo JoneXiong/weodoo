@@ -78,7 +78,7 @@ class ResUsers(models.Model):
         return {
             'name': u'发送企业微信消息',
             'type': 'ir.actions.act_window',
-            'res_model': 'wx.confirm',
+            'res_model': 'wo.confirm',
             'res_id': None,
             'view_mode': 'form',
             'view_type': 'form',

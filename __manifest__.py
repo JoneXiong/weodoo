@@ -10,6 +10,8 @@
     'depends': ['auth_oauth'],
     'application': True,
     'data': [
+        'security/ir.model.access.csv',
+
         'views/wx_login.xml',
         'data/oauth_provider.xml',
         'views/wo_config_views.xml',
