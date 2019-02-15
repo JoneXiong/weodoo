@@ -31,7 +31,7 @@ class AuthSignupHome(OAuthLogin):
         if not provider:
             provider = request.env(user=1).ref('weodoo.provider_third')
 
-        return_url = request.httprequest.url_root.replace(':80','') + 'auth_oauth/signin3rd'
+        return_url = request.httprequest.url_root + 'auth_oauth/signin3rd'
         state = self.get_state(provider)
         self._deal_state_r(state)
         params = dict(
