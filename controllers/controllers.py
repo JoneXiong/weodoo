@@ -21,7 +21,7 @@ QR_DICT = {}
 def gen_id(data):
     _now = time.time()
     # 回收过期的ID
-    for k,v in QR_DICT.items():
+    for k,v in list(QR_DICT.items()):
         if _now - v['ts'] > 600:
             del QR_DICT[k]
     # 生成ID
