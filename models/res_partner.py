@@ -40,4 +40,5 @@ class ResPartner(models.Model):
         send_msg(self.env, [self.user_ids[0].oauth_uid], msg)
 
     def get_corp_key(self):
-        return self.user_ids[0].oauth_uid
+        if self.user_ids:
+            return self.user_ids[0].oauth_uid
