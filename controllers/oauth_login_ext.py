@@ -23,6 +23,7 @@ class AuthSignupHome(OAuthLogin):
         _fm = request.params.get('_fm', None)
         if _fm:
             fragment = base64.urlsafe_b64decode(_fm.encode('utf-8')).decode('utf-8')
+            fragment = fragment.replace('_ftype=wo', '')
             r = werkzeug.url_unquote_plus(state.get('r', ''))
             state['r'] = werkzeug.url_quote_plus('%s#%s'%(r, fragment))
         return state
